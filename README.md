@@ -9320,8 +9320,39 @@ This will give index to the CoapplicantIncome field and searching will be carrie
 
 <--------------------Compass_image_reserved_------10 image ------------------> <br>
 
+<h2>(4)Find duplicates using aggregation in MongoDB</h2> <br>
+<p> To find duplicates, we need one unique field through which we can identify each document uniquely.Here it is <b>Loan_ID</b> field. Now we will add 6 more records with some of the repetitive Loan_ID from original 614 documents. </p>
+ <p>Because currently all Loan_ID fields has unique reocrds in all 614 documents.Hence to demonstrate Duplicacy we need some redundant documents and each documents can be identified uniquely with Loan_ID, Hence 6 documents have been added for demonstration. </p>
+ 
+ <------------Nwly insertred image 11-------------------------> <br>
 
+ <p>To find duplicate documents from given user_details collection we need to Aggregate Loan_ID's and for each Loan_ID's we need to count number of documents which resides in it. According to our general knowledge for each Loan_ID if we get document's count >1 , then we can say that document with Loan_ID = x is dplicate in user_details collection. </p>
+  
+Query : <br>
+  
+>  db.user_details.aggregate([    <br>
+>  {$group:{_id :"$Loan_ID" , "per_group_documents":{$sum : 1}}},  <br>
+>  {$match:{"per_group_documents" : { $gt : 1}}},   <br>
+> ]
+  
+ <b> Explanation:</b>  <br>
+  Here we are using Aggregation pipeline on user_details collection one-by-one. <br>
+  <b>FLOW :</b>
+  ```
+  Grouping on Loan_ID --> Accumulation of documents under each Loan_ID's --> Selection of Documents(which are duplicates) based on their count >1.
+  ```
 
+  After executing above query we will get all Loan_ID's which are repeated in other documents more than 1 time or multiple times.In our case it is maximally repeated 2 times. Hence they are duplicate records based on Loan_ID field. <br>
+  
+  
+  <-------------Output of Aggregation 12image ------------------>  <br>
+   
+  <h2>Demonstration Using MongoDB Compass :</h2>
+   
+   <------------------Output Image-13 area here -----------><br>
+    
+    
+   <i> Hence from Aggregation pipeline we will get 6 duplicate documents. Loan_ID's : "LP001640","LP001634","LP001636","LP001641","LP001637","LP001639" </i> <br>
 
 
 
