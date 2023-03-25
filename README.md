@@ -7,7 +7,7 @@ In MongoDB we can create database using <b><i>use dbname</i></b> command where d
 <p> Here I have used loan dataset in which  there are 614 documents which we can called as records in BSON format in MongoDB.
 <p> Initially there are 3 built-in databases in MongoDB .We can see databases using <b><i>show dbs</i></b> or <b><i>show databases</i></b> in mongosh terminal.
 
-<------------------Image - 1 scope---------->
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_1.PNG">
 
 <h3>Create database mongo_practical :</h3> 
 
@@ -17,11 +17,11 @@ In MongoDB we can create database using <b><i>use dbname</i></b> command where d
 
 > db.createCollection("user_details")  <br>
 
-<---------------Scope for image 2---------------------->
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_2.PNG">
 
 Insert 614 documents in user_details collection using insertMany.Given an array of documents, <b>insertMany()</b> inserts each document in the array into the collection.
 
-<h2>  Batch Create with minimum 100 records in MongoDb (create batch). </h2>
+<h2> (1) Batch Create with minimum 100 records in MongoDb (create batch). </h2>
 (loan dataset is  attached with this repository for 614 documents.)
 For Insertion:
 
@@ -9242,21 +9242,28 @@ db.user_details.insertMany([
 
 <h2> After successful insertion :</h2>
 
-<----------------------scope of image-3----------------------------->
-<----------------------scope of image4- ---------------------------->
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_3.PNG"> <br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_4.PNG">
 
+ <br>
+ <br>
+ <br>
+ <br>
 
 <h2>(2) Batch Update with minimum 100 records  in MongoDB (update batch).</h2>
 <b>Example - 1 : Simple Updation :  <br></b>
-Here we will set LoanAmount Field as if LoanAmount is set as NULL,then it will be replaced by 150.
+Here we will set LoanAmount Field as if LoanAmount is set as NULL,then it will be replaced by 150. <br>
+ 
 > db.user_details.updateMany({LoanAmount : null},{$set :{LoanAmount : 150}})
-
-<-----------------------------Image No. 7 area ----------------------------------------->  <br>
+ 
+ <br>
+<br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_7.PNG">  <br>
 From COUNT aggregation we have found that there are 22 records out of 614 records in which LoanAmount is set as NULL. Hence using above query we will assign LoanAmount as 150 to all who satisfies condition as "LoanAmount : null".   <br>
-(For cross verify, 1st reocrd in our collection have NULL value in LoanAmount , Hence after executing this query we will get it LoanValue field updated to : 150. Same way we an cross verify in whoe collection too.) <br>
-<b>Updated 1st reocord( For cross verify):</b>
+(For cross verify, 1st record in our collection have NULL value in LoanAmount , Hence after executing this query we will get it LoanValue field updated to : 150. Same way we an cross verify in whole collection too.) <br><br>
+<b>Updated 1st record/document( For cross verify):</b>
 
-<--------------------------------Image 8(Proof) area0--------------------> <br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_8.PNG"> <br>
 
 <b>Example-2 : More Updation with Bulk documents.</b>
 <p> Here I have used aggregation to count total number of documents which have ApplicantIncome > 2000.
@@ -9273,26 +9280,31 @@ So total count given by above query is : 572
 >  'total Number of Applicants who have ApplicantIncome > 2000 are': 572 <br>
 > }
 
-Now for updation for this batch of 573 records we will remove ApplicantIncome field. <br>
-<b><i>i.e. We will keep ApplicantIncome field only in those documents who have ApplicantIncome <= 2000. Otherwise we will remove that field from respective documents.</i></b>
-Query :
+Now for updation for this batch of 572 records we will remove ApplicantIncome field. <br>
+<b><i>i.e. We will keep ApplicantIncome field only in those documents who have ApplicantIncome <= 2000. Otherwise we will remove that field from respective documents.</i></b> <br>
+ <b>Query :</b> <br>
 > db.user_details.updateMany({ApplicantIncome :{$gt : 2000}},{$unset : {ApplicantIncome :""}})
 
 Here {ApplicantIncome :{$gt : 2000} will fetch documents with ApplicantIncome > 2000.  <br>
 And $unset : {ApplicantIncome :""} will remove ApplicantIncome field from the documents if above condition satisfies. <br> 
 
-Query Output :
-<-------------------Image 5 area reserved ----------------------->  <br>
+ <b>Query Output :</b> <br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_5.PNG">  <br>
 Which shows that 572 Recods have been updated.  <br>
 <b>Output of few updated records :</b> <br>
-<--------------------------------Image 6 area reserved---------------------><br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_6.PNG"><br>
 <i>Now for the above 2 documents residing among 614 documents we can see that on document with Loan_ID "LP001028" had ApplicantIncome 3073 hence it is removed but beside that document we have ApplicantIncome as 1853 hence it is not removed as a field from the document.This can be relate with any other documents and we can compare updation from the original collection also.</i>
 <i>updateMany() updates all matching documents in the collection that match the filter, using the update criteria to apply modifications. </i><br>
 
+ <br>
+ <br>
+ <br>
+ <br>
+ 
 <h2>(3) Perform indexing on particular 3 fields in MongoDB </h2>
 <p>Fundamentally, indexes in MongoDB are similar to indexes in other database systems. MongoDB defines indexes at the collection level and supports indexes on any field or sub-field of the documents in a MongoDB collection.</p>
 <p>MongoDB creates a unique index on the _id field during the creation of a collection. The _id index prevents clients from inserting two documents with the same value for the _id field. You cannot drop this index on the _id field. </p>
-<----------------------------------Image-9 area reserved----------------------><br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_9.PNG"><br>
 Syntax : <br>
 <pre>
     db.collection.createIndex( key and index type specification, options )
@@ -9318,15 +9330,21 @@ This will give index to the CoapplicantIncome field and searching will be carrie
 <p>If you call db.collection.createIndex() for an index that already exists, MongoDB does not recreate the index.</p>
 
 
-<--------------------Compass_image_reserved_------10 image ------------------> <br>
+<img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_10.PNG"> <br>
 
+ 
+ <br>
+ <br>
+ <br>
+ <br>
+ 
 <h2>(4)Find duplicates using aggregation in MongoDB</h2> <br>
-<p> To find duplicates, we need one unique field through which we can identify each document uniquely.Here it is <b>Loan_ID</b> field. Now we will add 6 more records with some of the repetitive Loan_ID from original 614 documents. </p>
+<p> To find duplicates, we need one unique field through which we can identify each document uniquely.Here it is <b>Loan_ID</b> field. Now we will add 6 more records with some of the repetitive Loan_ID over our original 614 documents. </p>
  <p>Because currently all Loan_ID fields has unique reocrds in all 614 documents.Hence to demonstrate Duplicacy we need some redundant documents and each documents can be identified uniquely with Loan_ID, Hence 6 documents have been added for demonstration. </p>
  
- <------------Nwly insertred image 11-------------------------> <br>
+ <img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_11.PNG"> <br>
 
- <p>To find duplicate documents from given user_details collection we need to Aggregate Loan_ID's and for each Loan_ID's we need to count number of documents which resides in it. According to our general knowledge for each Loan_ID if we get document's count >1 , then we can say that document with Loan_ID = x is dplicate in user_details collection. </p>
+ <p>To find duplicate documents from given user_details collection we need to Aggregate Loan_ID's and for each Loan_ID's we need to count number of documents which resides in it. According to our general knowledge for each Loan_ID if we get document's count >1 , then we can say that document with Loan_ID = x is duplicate in user_details collection. </p>
   
 Query : <br>
   
@@ -9345,11 +9363,11 @@ Query : <br>
   After executing above query we will get all Loan_ID's which are repeated in other documents more than 1 time or multiple times.In our case it is maximally repeated 2 times. Hence they are duplicate records based on Loan_ID field. <br>
   
   
-  <-------------Output of Aggregation 12image ------------------>  <br>
+  <img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_12.PNG">  <br>
    
   <h2>Demonstration Using MongoDB Compass :</h2>
    
-   <------------------Output Image-13 area here -----------><br>
+   <img src="https://github.com/dev18-kapadiaa/MongoDB-Assessment/blob/master/Mongo_13.PNG"><br>
     
     
    <i> Hence from Aggregation pipeline we will get 6 duplicate documents. Loan_ID's : "LP001640","LP001634","LP001636","LP001641","LP001637","LP001639" </i> <br>
